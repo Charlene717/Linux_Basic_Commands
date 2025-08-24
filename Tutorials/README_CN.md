@@ -1,4 +1,7 @@
 # 基本 Linux 指令教學
+### *若需本指南的英文版本，請參閱 **[English version](../README.md)**.*
+---
+
 作者：Charlene  
 版本：v1.1  
 最後更新：2025-08-24  

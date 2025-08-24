@@ -1,4 +1,7 @@
 # Basic Linux Commands Guide
+### *For the Chinese version of this guide, please see the **[中文版本](./Tutorials/README_CN.md)**.*
+---
+
 Author: Charlene  
 Version: v1.1  
 Last Updated: 2025-08-24  
