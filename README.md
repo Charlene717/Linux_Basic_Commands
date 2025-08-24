@@ -1,214 +1,214 @@
-# 基本 Linux 指令教學
-作者：Charlene  
-版本：v1.1  
-最後更新：2025-08-24  
+# Basic Linux Commands Guide
+Author: Charlene  
+Version: v1.1  
+Last Updated: 2025-08-24  
 
-> 本文件整理了常見的 Linux 指令，適合初學者快速查找與練習。涵蓋檔案/資料夾操作、檔案檢視、使用者與權限、系統監控、壓縮解壓縮、網路操作與套件管理。附錄提供權限設定表與實用範例。
-
----
-
-## 目錄
-- [1. 檔案與資料夾操作](#1-檔案與資料夾操作)
-- [2. 檔案內容檢視](#2-檔案內容檢視)
-- [3. 使用者與權限](#3-使用者與權限)
-- [4. 系統監控與程序管理](#4-系統監控與程序管理)
-- [5. 壓縮與解壓縮](#5-壓縮與解壓縮)
-- [6. 網路與連線](#6-網路與連線)
-- [7. 軟體安裝與套件管理](#7-軟體安裝與套件管理)
-- [8. 其他常用指令](#8-其他常用指令)
-- [附錄 A. 權限設定對照表](#附錄-a-權限設定對照表)
-- [附錄 B. 常用範例練習](#附錄-b-常用範例練習)
+> This document summarizes common Linux commands, useful for beginners as a quick reference and practice guide. It covers file/directory operations, file viewing, user and permission management, system monitoring, compression/extraction, networking, and package management. Appendices include a permission table and practical examples.
 
 ---
 
-## 1. 檔案與資料夾操作
+## Table of Contents
+- [1. File and Directory Operations](#1-file-and-directory-operations)
+- [2. Viewing File Contents](#2-viewing-file-contents)
+- [3. Users and Permissions](#3-users-and-permissions)
+- [4. System Monitoring and Process Management](#4-system-monitoring-and-process-management)
+- [5. Compression and Extraction](#5-compression-and-extraction)
+- [6. Networking and Connections](#6-networking-and-connections)
+- [7. Software Installation and Package Management](#7-software-installation-and-package-management)
+- [8. Other Useful Commands](#8-other-useful-commands)
+- [Appendix A. Permission Settings Table](#appendix-a-permission-settings-table)
+- [Appendix B. Common Practice Examples](#appendix-b-common-practice-examples)
+
+---
+
+## 1. File and Directory Operations
 ```bash
-pwd                     # 顯示當前目錄
-ls                      # 列出檔案
-ls -l                   # 詳細列表（含權限、大小、時間）
-ls -lh                  # 以人類可讀單位顯示檔案大小
-ls -a                   # 包含隱藏檔
-cd /path/to/dir         # 切換資料夾
-cd ..                   # 回到上一層
-mkdir new_folder        # 建立資料夾
-mkdir -p a/b/c          # 一次建立多層資料夾
-rmdir empty_folder      # 刪除空資料夾
-rm -r folder            # 刪除資料夾（含檔案）
-touch file.txt          # 建立空檔案
-cp file1 file2          # 複製檔案
-cp -r dir1 dir2         # 複製整個資料夾
-mv old new              # 重新命名或移動檔案
-rm file.txt             # 刪除檔案
-find . -name "*.txt"    # 搜尋當前目錄下所有 txt 檔
+pwd                     # Show current directory
+ls                      # List files
+ls -l                   # Detailed list (permissions, size, date)
+ls -lh                  # Human-readable file sizes
+ls -a                   # Include hidden files
+cd /path/to/dir         # Change directory
+cd ..                   # Go up one level
+mkdir new_folder        # Create a directory
+mkdir -p a/b/c          # Create nested directories
+rmdir empty_folder      # Remove empty directory
+rm -r folder            # Remove directory with files
+touch file.txt          # Create an empty file
+cp file1 file2          # Copy file
+cp -r dir1 dir2         # Copy directory
+mv old new              # Rename or move file
+rm file.txt             # Remove file
+find . -name "*.txt"    # Find all txt files in current path
 ```
 
 ---
 
-## 2. 檔案內容檢視
+## 2. Viewing File Contents
 ```bash
-cat file.txt            # 顯示檔案全部內容
-less file.txt           # 分頁查看檔案內容（上下翻頁）
-head file.txt           # 顯示前 10 行
-head -n 20 file.txt     # 顯示前 20 行
-tail file.txt           # 顯示最後 10 行
-tail -f log.txt         # 動態顯示最新內容（監看 log）
-grep "keyword" file.txt # 搜尋檔案內含 keyword 的行
-grep -r "pattern" ./    # 在資料夾內遞迴搜尋
-wc -l file.txt          # 統計檔案行數
-wc -w file.txt          # 統計檔案字數
+cat file.txt            # Display file contents
+less file.txt           # View file page by page
+head file.txt           # Show first 10 lines
+head -n 20 file.txt     # Show first 20 lines
+tail file.txt           # Show last 10 lines
+tail -f log.txt         # Continuously watch a log file
+grep "keyword" file.txt # Search for keyword in file
+grep -r "pattern" ./    # Recursively search in directory
+wc -l file.txt          # Count lines in file
+wc -w file.txt          # Count words in file
 ```
 
 ---
 
-## 3. 使用者與權限
+## 3. Users and Permissions
 ```bash
-whoami                  # 顯示當前使用者
-id                      # 顯示 UID 與群組
-adduser user1           # 新增使用者
-passwd user1            # 設定密碼
-su user1                # 切換使用者
-sudo command            # 以管理員身份執行
+whoami                  # Show current user
+id                      # Show UID and groups
+adduser user1           # Add new user
+passwd user1            # Set password
+su user1                # Switch user
+sudo command            # Run command as administrator
 
-chmod 755 file          # 修改權限 (rwxr-xr-x)
-chmod u+x file          # 給檔案擁有者增加執行權限
-chown user:group file   # 修改檔案擁有者
-groups                  # 查看當前使用者所屬群組
-usermod -aG sudo user1  # 將 user1 加入 sudo 群組
+chmod 755 file          # Change permission (rwxr-xr-x)
+chmod u+x file          # Give owner execute permission
+chown user:group file   # Change file ownership
+groups                  # Show current user's groups
+usermod -aG sudo user1  # Add user1 to sudo group
 ```
 
 ---
 
-## 4. 系統監控與程序管理
+## 4. System Monitoring and Process Management
 ```bash
-top                     # 即時顯示 CPU / 記憶體 / 程序
-htop                    # 更直觀的 top（需安裝）
-ps aux                  # 顯示所有程序
-kill -9 PID             # 強制終止程序
-jobs                    # 顯示背景工作
-fg %1                   # 將第 1 個背景工作切回前景
-df -h                   # 顯示磁碟使用量
-du -sh folder/          # 顯示資料夾大小
-free -h                 # 顯示記憶體狀況
-uptime                  # 顯示系統執行時間
-uname -a                # 顯示系統資訊
+top                     # Real-time CPU / memory / processes
+htop                    # User-friendly top (requires install)
+ps aux                  # Show all processes
+kill -9 PID             # Kill process by PID
+jobs                    # Show background jobs
+fg %1                   # Bring job 1 to foreground
+df -h                   # Disk usage
+du -sh folder/          # Folder size
+free -h                 # Memory usage
+uptime                  # Show system uptime
+uname -a                # System information
 ```
 
 ---
 
-## 5. 壓縮與解壓縮
+## 5. Compression and Extraction
 ```bash
-tar -cvf files.tar file1 file2   # 建立 tar 包
-tar -xvf files.tar               # 解壓 tar
-tar -czvf files.tar.gz folder/   # 建立壓縮檔
-tar -xzvf files.tar.gz           # 解壓 tar.gz
-zip files.zip file1 file2        # 建立 zip
-unzip files.zip                  # 解壓 zip
-gzip file.txt                    # 壓縮成 file.txt.gz
-gunzip file.txt.gz               # 解壓縮
+tar -cvf files.tar file1 file2   # Create tar archive
+tar -xvf files.tar               # Extract tar archive
+tar -czvf files.tar.gz folder/   # Create compressed archive
+tar -xzvf files.tar.gz           # Extract compressed archive
+zip files.zip file1 file2        # Create zip
+unzip files.zip                  # Extract zip
+gzip file.txt                    # Compress into file.txt.gz
+gunzip file.txt.gz               # Decompress
 ```
 
 ---
 
-## 6. 網路與連線
+## 6. Networking and Connections
 ```bash
-ping google.com          # 測試連線
-curl http://example.com  # 傳送 HTTP 請求
-wget http://file.url     # 下載檔案
-scp file.txt user@host:/path/   # 從本機傳送檔案到遠端
-scp user@host:/path/file .      # 從遠端下載檔案
-ssh user@host            # SSH 連線到遠端伺服器
-ifconfig                 # 顯示網路設定（舊版系統）
-ip a                     # 顯示網路設定（較新系統）
+ping google.com          # Test connectivity
+curl http://example.com  # Send HTTP request
+wget http://file.url     # Download file
+scp file.txt user@host:/path/   # Copy file to remote
+scp user@host:/path/file .      # Download file from remote
+ssh user@host            # SSH connect to remote server
+ifconfig                 # Show network settings (older)
+ip a                     # Show network settings (newer)
 ```
 
 ---
 
-## 7. 軟體安裝與套件管理
+## 7. Software Installation and Package Management
 ### Debian/Ubuntu (apt)
 ```bash
-sudo apt update          # 更新套件列表
-sudo apt upgrade         # 升級所有已安裝套件
-sudo apt install pkg     # 安裝套件
-sudo apt remove pkg      # 移除套件
+sudo apt update          # Update package list
+sudo apt upgrade         # Upgrade installed packages
+sudo apt install pkg     # Install package
+sudo apt remove pkg      # Remove package
 ```
 
 ### Red Hat/CentOS (yum/dnf)
 ```bash
-sudo yum install pkg     # 安裝套件
-sudo yum update          # 更新套件
-sudo yum remove pkg      # 移除套件
+sudo yum install pkg     # Install package
+sudo yum update          # Update packages
+sudo yum remove pkg      # Remove package
 ```
 
-### 常見工具
+### Useful tools
 ```bash
-which python3            # 查看程式路徑
-whereis python3          # 顯示程式相關檔案位置
+which python3            # Find program path
+whereis python3          # Show locations related to program
 ```
 
 ---
 
-## 8. 其他常用指令
+## 8. Other Useful Commands
 ```bash
-man ls                   # 顯示指令說明 (manual)
-history                  # 查看歷史指令
-clear                    # 清空終端畫面
-echo "Hello"             # 輸出文字
-date                     # 顯示日期時間
-who                      # 顯示登入使用者
-alias ll='ls -lh'        # 建立快捷指令
+man ls                   # Show manual for command
+history                  # Show command history
+clear                    # Clear terminal screen
+echo "Hello"             # Print text
+date                     # Show date/time
+who                      # Show logged-in users
+alias ll='ls -lh'        # Create command shortcut
 ```
 
 ---
 
-## 附錄 A. 權限設定對照表
+## Appendix A. Permission Settings Table
 
-| 權限值 | 說明 | 二進位 | 對應權限 (r=讀, w=寫, x=執行) |
-|--------|------|--------|-------------------------------|
-| 0      | 無權限 | 000 | --- |
-| 1      | 執行  | 001 | --x |
-| 2      | 寫入  | 010 | -w- |
-| 3      | 寫+執 | 011 | -wx |
-| 4      | 讀取  | 100 | r-- |
-| 5      | 讀+執 | 101 | r-x |
-| 6      | 讀+寫 | 110 | rw- |
-| 7      | 全部  | 111 | rwx |
+| Value | Meaning | Binary | Permission (r=read, w=write, x=execute) |
+|-------|---------|--------|------------------------------------------|
+| 0     | No perm | 000    | --- |
+| 1     | Execute | 001    | --x |
+| 2     | Write   | 010    | -w- |
+| 3     | W+Exec  | 011    | -wx |
+| 4     | Read    | 100    | r-- |
+| 5     | R+Exec  | 101    | r-x |
+| 6     | R+Write | 110    | rw- |
+| 7     | All     | 111    | rwx |
 
-### 範例：
-- `chmod 644 file.txt` → 擁有者可讀寫，群組與其他人僅可讀  
-- `chmod 755 script.sh` → 擁有者可讀寫執行，其他人可讀與執行  
-- `chmod 777 test.sh` → 所有人皆有讀寫執行權限（⚠ 不建議）
+### Examples:
+- `chmod 644 file.txt` → Owner read/write, group/others read only  
+- `chmod 755 script.sh` → Owner full, group/others read+execute  
+- `chmod 777 test.sh` → Everyone full (⚠ Not recommended)  
 
 ---
 
-## 附錄 B. 常用範例練習
-1. 建立一個資料夾 `practice` 並進入：  
+## Appendix B. Common Practice Examples
+1. Create folder `practice` and enter it:  
    ```bash
    mkdir practice && cd practice
    ```
-2. 建立檔案 `note.txt` 並寫入一些文字：  
+2. Create `note.txt` and write text:  
    ```bash
    echo "Hello Linux" > note.txt
    ```
-3. 檢視與搜尋內容：  
+3. View and search file:  
    ```bash
    cat note.txt
    grep "Linux" note.txt
    ```
-4. 修改檔案權限：  
+4. Change file permission:  
    ```bash
-   chmod 600 note.txt   # 只有自己可讀寫
+   chmod 600 note.txt   # Only owner read/write
    ls -l
    ```
-5. 將資料夾壓縮與解壓縮：  
+5. Compress and extract:  
    ```bash
    tar -czvf practice.tar.gz practice/
    tar -xzvf practice.tar.gz
    ```
-6. 使用 SSH 登入遠端伺服器（需帳號密碼）：  
+6. Connect to remote via SSH:  
    ```bash
    ssh user@hostname
    ```
 
 ---
 
-✅ 本文件可作為快速查詢手冊與練習手冊使用。
+✅ This document can be used as a quick reference and practice guide.
