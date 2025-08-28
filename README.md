@@ -1,5 +1,5 @@
 # Basic Linux Command Guide
-### *For the Chinese version of this guide, please refer to **[中文版](../Tutorials/README_CN.md)**.*
+### *For the Chinese version of this guide, please see the **[中文版本](./Tutorials/README_CN.md)**.*
 ---
 
 Author: Charlene  
