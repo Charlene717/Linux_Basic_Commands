@@ -226,7 +226,7 @@ Rscript -e '.libPaths()'  # 查看 R 套件安裝路徑
    ```
 3. **使用虛擬環境**：避免與系統套件衝突（如 Python 的 `venv` / conda）。
 
-### 範例：fastp 安裝後無法直接執行
+#### 範例：fastp 安裝後無法直接執行
 
 假設我們使用 `conda` 或 `pip install --user fastp` 安裝，程式可能會被放在：
 ```
