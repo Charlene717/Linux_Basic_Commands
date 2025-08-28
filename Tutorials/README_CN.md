@@ -127,7 +127,14 @@ ip a                     # 顯示網路設定（較新系統）
 ---
 
 ## 7. 軟體安裝與套件管理
-### Debian/Ubuntu (apt)
+
+在 Linux 中，軟體與套件的安裝方式很多，常見的有 **系統套件管理工具**（apt, yum, dnf）、**語言專屬套件管理器**（pip, conda, CRAN, Bioconductor）等。以下整理安裝方式與常見錯誤。
+
+---
+
+### 7.1 系統套件管理工具
+
+#### Debian/Ubuntu (apt)
 ```bash
 sudo apt update          # 更新套件列表
 sudo apt upgrade         # 升級所有已安裝套件
@@ -135,18 +142,96 @@ sudo apt install pkg     # 安裝套件
 sudo apt remove pkg      # 移除套件
 ```
 
-### Red Hat/CentOS (yum/dnf)
+#### Red Hat/CentOS (yum/dnf)
 ```bash
 sudo yum install pkg     # 安裝套件
 sudo yum update          # 更新套件
 sudo yum remove pkg      # 移除套件
 ```
 
-### 常見工具
+> **常見錯誤與原因：**
+> - `E: Unable to locate package xxx` → 套件名稱錯誤或缺少套件源（需 `sudo apt update` 或新增 repository）。
+> - `Permission denied` → 未使用 `sudo` 嘗試安裝系統層級套件。
+
+---
+
+### 7.2 Python 套件管理
+
+#### pip (安裝到系統或使用者目錄)
 ```bash
-which python3            # 查看程式路徑
-whereis python3          # 顯示程式相關檔案位置
+pip install package              # 預設安裝到系統路徑（需 sudo）
+pip install --user package       # 安裝到使用者目錄 (~/.local/lib/pythonX.X/site-packages)
 ```
+
+#### conda (推薦用於隔離環境)
+```bash
+conda create -n myenv python=3.11
+conda activate myenv
+conda install package
+```
+
+> **常見錯誤與解法：**
+> - `ModuleNotFoundError`：套件已安裝，但安裝位置不在 `PYTHONPATH`。
+> - `pip install` 安裝到 root `/usr/lib` 時，非 sudo 用戶無法使用。  
+>   → 解法：加上 `--user` 或建立 `virtualenv/conda env`。
+
+---
+
+### 7.3 R 套件管理
+
+#### CRAN
+```R
+install.packages("dplyr")                 # 預設安裝到系統資料夾
+install.packages("dplyr", lib="~/Rlib")   # 安裝到自訂路徑
+```
+
+#### Bioconductor
+```R
+if (!require("BiocManager")) install.packages("BiocManager")
+BiocManager::install("DESeq2")
+```
+
+> **常見錯誤與解法：**
+> - `library(xxx) 中錯誤：找不到套件` → 已安裝但 lib 路徑未設定。
+>   ```R
+>   .libPaths()                         # 檢查目前的 R 套件路徑
+>   .libPaths(c("~/Rlib", .libPaths())) # 加入自訂路徑
+>   ```
+
+---
+
+### 7.4 套件位置與環境設定
+
+Linux 的程式與套件可能安裝在不同資料夾，例如：
+- `/usr/bin/` → 系統主要程式
+- `/usr/local/bin/` → 手動編譯安裝的程式
+- `~/.local/bin/` → 使用者安裝的程式（無 root 權限時）
+- `~/anaconda3/envs/` → conda 環境專用
+
+#### 如何確認套件位置
+```bash
+which python3             # 查看執行檔路徑
+whereis python3           # 顯示相關檔案位置
+pip show package_name     # 顯示 Python 套件安裝位置
+Rscript -e '.libPaths()'  # 查看 R 套件安裝路徑
+```
+
+#### 避免安裝受限於 root 權限的方法
+1. **使用 `--user`**：安裝到使用者目錄。
+2. **修改環境變數 PATH**：確保系統能找到安裝在 `~/.local/bin` 的可執行檔。
+   ```bash
+   echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.bashrc
+   source ~/.bashrc
+   ```
+3. **使用虛擬環境**：避免與系統套件衝突（如 Python 的 `venv` / conda）。
+
+---
+
+### 7.5 常見問題整理
+- **安裝到錯誤目錄** → 使用 `.libPaths()` (R) 或 `pip show` (Python) 檢查。
+- **找不到指令** → 套件安裝在 `~/.local/bin`，需加到 `PATH`。
+- **權限不足** → 避免用 root，建議用 `--user` 或 conda 虛擬環境。
+- **不同版本衝突** → 建議在隔離環境安裝（conda, venv, renv）。
 
 ---
 
