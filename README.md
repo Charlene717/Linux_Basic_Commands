@@ -226,6 +226,38 @@ Rscript -e '.libPaths()'  # Show R package paths
    ```
 3. **Use Virtual Environments**: Avoid conflicts (Python venv/conda, R renv).
 
+#### Example: fastp cannot be executed directly after installation
+
+Suppose we install `fastp` via `conda` or `pip install --user fastp`, the program may be located at:
+```
+~/.local/bin/fastp
+```
+
+If we try:
+```bash
+fastp -h
+```
+we get:
+```
+bash: fastp: command not found
+```
+
+This happens because `~/.local/bin` is not in the `PATH`.
+
+**Solution: add it to PATH**
+```bash
+echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc
+```
+
+Then verify:
+```bash
+which fastp
+# Output should be /home/username/.local/bin/fastp
+```
+
+Now `fastp` can be executed directly without typing the full path.
+
 ---
 
 ### 7.5 Common Problems Summary
