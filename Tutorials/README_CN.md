@@ -226,6 +226,39 @@ Rscript -e '.libPaths()'  # 查看 R 套件安裝路徑
    ```
 3. **使用虛擬環境**：避免與系統套件衝突（如 Python 的 `venv` / conda）。
 
+### 範例：fastp 安裝後無法直接執行
+
+假設我們使用 `conda` 或 `pip install --user fastp` 安裝，程式可能會被放在：
+```
+~/.local/bin/fastp
+```
+
+此時若直接輸入：
+```bash
+fastp -h
+```
+會出現：
+```
+bash: fastp: command not found
+```
+
+原因是 `~/.local/bin` 不在 `PATH` 裡。
+
+**解決方式：將其加入 PATH**
+```bash
+echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc
+```
+
+再確認：
+```bash
+which fastp
+# 輸出應該會是 /home/username/.local/bin/fastp
+```
+
+這樣就能直接執行 `fastp`，不用每次輸入完整路徑。
+
+
 ---
 
 ### 7.5 常見問題整理
